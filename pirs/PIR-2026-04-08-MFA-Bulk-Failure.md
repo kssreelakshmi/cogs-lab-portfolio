@@ -44,11 +44,11 @@ Our Kaleyra SMS route used a shared sender ID. Another business on the same rout
 
 ## Prevention Actions
 
-- [ ] Set up sender ID monitoring alert in Kaleyra — Owner: L2 Network Team — Due: 2026-04-15
-- [ ] Add backup sender ID steps to L1 runbook so L1 can fix this without escalating — Owner: Support Lead — Due: 2026-04-22
-- [ ] Request a dedicated sender ID from Kaleyra so we're not sharing with other businesses — Owner: Vendor Management — Due: 2026-05-01
+- [ ] Set up sender ID monitoring alert in Kaleyra — Owner: Support Team — Due: 2026-04-15
+- [ ] Add backup sender ID steps to L1 runbook so L1 can fix this without escalating — Owner: Support Team — Due: 2026-04-22
+- [ ] Request a dedicated sender ID from Kaleyra so we're not sharing with other businesses — Owner: Infrastructure Team — Due: 2026-05-01
 
 ## Open Items
 
-- [ ] Write KB article on SMS OTP bulk failure due to sender ID blacklisting — Owner: L1 Team Lead — Due: 2026-04-15
-- [ ] Check if other customers are on the same Kaleyra route — Owner: L2 Network Team — Due: 2026-04-18
+- [ ] KB article - what to check in Kaleyra when SMS OTP fails in bulk and how to switch sender IDs — Owner: Support Team — Due: 2026-04-15
+
