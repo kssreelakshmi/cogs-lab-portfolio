@@ -54,3 +54,46 @@ Immediate — lab environment, no customer impact
 - [ ] Change plan reviewed
 - [ ] Backup confirmed before execution
 - [ ] Rollback plan tested
+
+---
+
+## Execution Log
+
+### Change Executed — 2026-06-29
+
+**Step 1 — Backup taken:**
+sudo cp /etc/nginx/sites-available/lab-tls /etc/nginx/sites-available/lab-tls.backup
+
+**Step 2 — Config updated:** ssl_protocols changed from TLSv1.2 TLSv1.3 to TLSv1.3 only
+
+**Step 3 — nginx -t result:** syntax ok — test successful
+
+**Step 4 — Nginx restarted:** sudo systemctl restart nginx
+
+**Step 5 — Verification:**
+- TLS 1.3: New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384 ✅
+- TLS 1.2: Cipher 0000 — connection refused ✅
+
+**Status: COMPLETED**
+
+---
+
+## Rollback Log
+
+### Rollback Triggered — 2026-06-29
+
+**Trigger:** Deliberate bad config — ssl_protocolz typo introduced
+
+**nginx -t result:** unknown directive "ssl_protocolz" — test FAILED
+
+**Rollback executed:**
+sudo cp /etc/nginx/sites-available/lab-tls.backup /etc/nginx/sites-available/lab-tls
+sudo nginx -t && sudo systemctl reload nginx
+
+**nginx -t after rollback:** syntax ok — test successful
+
+**Service verified:** curl -k https://localhost returned COGS Lab page ✅
+
+**Rollback time:** Under 2 minutes
+
+**Status: ROLLED BACK SUCCESSFULLY**
