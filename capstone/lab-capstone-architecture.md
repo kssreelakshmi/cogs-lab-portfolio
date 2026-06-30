@@ -104,3 +104,21 @@ Added 3 dedicated Uptime Kuma monitors for the capstone stack, separate from the
 - **Capstone WireGuard Gateway** - Ping check on 140.245.253.205 (TCP port checks don't work reliably for WireGuard's UDP-based handshake, so ping is the more accurate health signal)
 
 All 3 show green after setup.
+
+---
+
+## Reflection: How This Mini-ZTNA Maps to InstaSafe
+
+Building this small setup helped me actually understand things I had only read about before. The three parts I used — WireGuard, Nginx, and Keycloak — match up pretty closely with what InstaSafe does for real, just on a much smaller scale.
+
+WireGuard is basically doing the job of the InstaSafe Agent. When my laptop connects through the tunnel, every request I send gets encrypted and sent through a private path to the gateway VM. It doesn't matter what wifi or network I'm on — the tunnel always takes me to the same place. That's the core idea of any ZTNA agent. In InstaSafe's real product, this would be the agent app installed on someone's laptop, connecting to an actual InstaSafe gateway instead of my own test VM.
+
+The Nginx proxy on VM2 is playing the role of the InstaSafe Gateway. It's the point where traffic coming through the tunnel gets sent to the right app. In my setup, it just forwards everything hitting /app to one backend. A real gateway would do a lot more here — checking who the user is, what app they're trying to reach, what time it is, even what device they're using — before deciding whether to let the request through. My Nginx config doesn't check any of that, it just passes traffic along blindly. That's the biggest difference between this lab and a real production setup.
+
+Keycloak is standing in for the identity provider, which in InstaSafe's case would usually be something like Azure AD or Okta. My version just shows the Keycloak welcome page when you reach it — that's enough to prove the tunnel and routing work, but there's no actual login or authentication happening. In a real ZTNA setup, every single request through the gateway would need to carry proof that the user is logged in, and the gateway would check that proof before letting the request through. My setup doesn't do that part at all.
+
+So what's missing compared to a real deployment? The main thing is that there's no check happening on every request. Real ZTNA follows "never trust, always verify" — meaning every request gets checked, not just the first one when the tunnel connects. In my setup, once the WireGuard tunnel is up, anything sent to the gateway gets forwarded with zero checks after that. A real gateway would stop and check for a valid login session on every request, and send the user to log in if they don't have one. I also don't have any device checks, no ongoing session checks, and I'm not actually using Keycloak's SAML login flow even though Keycloak is running. There's also no central place deciding which user can access which app — that logic just doesn't exist in my setup.
+
+There's also no backup or redundancy here. One Nginx server, one Keycloak server — if either goes down, everything breaks. A real InstaSafe setup would have multiple gateways behind a load balancer so one server going down doesn't take everything offline.
+
+What this lab really taught me is how all these pieces actually connect to each other. Reading about ZTNA on paper is one thing, but actually debugging why traffic wasn't reaching Nginx because of a hidden iptables rule, or figuring out why the WireGuard tunnel kept dropping, taught me a lot more about what could go wrong in a real setup — and what I'd need to check, step by step, if a customer ever told me "I can't reach the gateway."
