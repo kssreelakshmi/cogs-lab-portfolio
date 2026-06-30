@@ -122,3 +122,25 @@ So what's missing compared to a real deployment? The main thing is that there's 
 There's also no backup or redundancy here. One Nginx server, one Keycloak server — if either goes down, everything breaks. A real InstaSafe setup would have multiple gateways behind a load balancer so one server going down doesn't take everything offline.
 
 What this lab really taught me is how all these pieces actually connect to each other. Reading about ZTNA on paper is one thing, but actually debugging why traffic wasn't reaching Nginx because of a hidden iptables rule, or figuring out why the WireGuard tunnel kept dropping, taught me a lot more about what could go wrong in a real setup — and what I'd need to check, step by step, if a customer ever told me "I can't reach the gateway."
+
+---
+
+## Screenshots
+
+**WireGuard tunnel connectivity confirmed:**
+
+<p align="center">
+  <img src="https://github.com/kssreelakshmi/cogs-lab-portfolio/blob/main/screenshots/lab-capstone-1-image.png" alt="WireGuard tunnel ping success 0 percent packet loss" width="800"/>
+</p>
+
+**Full end-to-end request through the ZTNA stack — Keycloak page returned via tunnel:**
+
+<p align="center">
+  <img src="https://github.com/kssreelakshmi/cogs-lab-portfolio/blob/main/screenshots/lab-capstone-2-image.png" alt="Keycloak welcome page returned through full tunnel chain" width="800"/>
+</p>
+
+**Uptime Kuma monitoring all 3 capstone components green:**
+
+<p align="center">
+  <img src="https://github.com/kssreelakshmi/cogs-lab-portfolio/blob/main/screenshots/lab-capstone-3-image.png" alt="Uptime Kuma showing Capstone WireGuard Gateway Nginx Proxy and Keycloak IdP all up" width="800"/>
+</p>
