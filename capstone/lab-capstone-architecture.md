@@ -127,7 +127,7 @@ What this lab really taught me is how all these pieces actually connect to each 
 
 ## Screenshots
 
-**WireGuard tunnel connectivity confirmed:**
+**Uptime Kuma monitoring all 3 capstone components green:**
 
 <p align="center">
   <img src="https://github.com/kssreelakshmi/cogs-lab-portfolio/blob/main/screenshots/lab-capstone-1-image.png" alt="WireGuard tunnel ping success 0 percent packet loss" width="800"/>
@@ -139,7 +139,7 @@ What this lab really taught me is how all these pieces actually connect to each 
   <img src="https://github.com/kssreelakshmi/cogs-lab-portfolio/blob/main/screenshots/lab-capstone-2-image.png" alt="Keycloak welcome page returned through full tunnel chain" width="800"/>
 </p>
 
-**Uptime Kuma monitoring all 3 capstone components green:**
+**WireGuard tunnel connectivity confirmed:**
 
 <p align="center">
   <img src="https://github.com/kssreelakshmi/cogs-lab-portfolio/blob/main/screenshots/lab-capstone-3-image.png" alt="Uptime Kuma showing Capstone WireGuard Gateway Nginx Proxy and Keycloak IdP all up" width="800"/>
